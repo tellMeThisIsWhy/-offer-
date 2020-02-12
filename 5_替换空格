@@ -1,0 +1,39 @@
+https://github.com/CyC2018/CS-Notes/blob/master/notes/5.%20%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC.md
+
+
+
+    int countSpace(StringBuffer str,int length){
+        char c=str.charAt(0);
+        int i=0;
+        int count=0;
+        while(i){
+            if(c==' ') {
+                str.append("  ");
+                count++;
+            }
+            
+            
+            //用for不用while，当i到达边界时，会执行 c=str.charAt(i); ，导致错误
+            i++;
+            c=str.charAt(i);
+        }
+        return count;
+    }
+
+    public String replaceSpace(StringBuffer str) {
+    	if(str==null) return null;
+        int length=str.length();
+        int spaceNum=countSpace(str);
+        for(int i=length+spaceNum*2-1;i>=0;i--){
+            if(str.charAt(i-spaceNum*2)!=' '){
+            
+        
+            //对str.replace函数不熟悉，用setCharAt
+                str.replace(i-2,i,"%20");
+                spaceNum--;
+            }else{
+                str.setCharAt(i,str.charAt(i-2*spaceNum));
+            }
+        }
+        return new String(str);
+    }
