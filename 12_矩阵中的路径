@@ -1,0 +1,44 @@
+public class Solution {
+//此函数内部逻辑不清楚
+    public boolean judgePath(char[] matrix,int rows,int cols,boolean [][]flag,char[]str,int pos,int i,int j)
+    {
+        //1、遍历到了str的末尾时，返回true
+        //2、不满足继续遍历的条件时，return false
+        //3、满足条件时，先修改flag数组为true(访问过)，之后对四个方向递归调用此函数
+        if(str.length==pos)return true;//当前遍历字母处于str.[length]('\0')时，返回true
+        boolean result=false;
+        if(i>=0 && i<rows && j>=0 &&j<cols && matrix[i*cols+j]==str[pos] && !flag[i][j]){
+            flag[i][j]=true;    
+            result=judgePath(matrix,rows,cols,flag,str,pos+1,i-1,j) ||//上
+                judgePath(matrix,rows,cols,flag,str,pos+1,i+1,j) ||//下
+                judgePath(matrix,rows,cols,flag,str,pos+1,i,j-1) ||//左
+                judgePath(matrix,rows,cols,flag,str,pos+1,i,j+1) ;//右
+            if(!result){
+                flag[i][j]=false;
+            }
+        }
+        return result;
+    }
+    
+    public boolean hasPath(char[] matrix, int rows, int cols, char[] str)
+    {
+        if(rows<=0 || cols<=0)return false;
+        if(str.length==0) return true;
+        
+        boolean [][] flag=new boolean[rows][cols];
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                flag[i][j]=false;
+            }
+        }
+        int pos=0;
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                if(judgePath(matrix,rows,cols,flag,str,0,i,j))return true;
+                //res=judgePath(matrix,rows,cols,flag,str,0,i,j);
+                //if(res)return true;
+            }
+        }
+        return false;
+    }
+}
