@@ -1,0 +1,32 @@
+public class Solution {
+    public boolean judgeCore(int threshold,int row,int col){
+        int sum=0;
+        @error
+        for(;row!=0 || col!=0;row/=10,col/=10){//判定条件内部，最开始写成了&
+            int i=row%10;
+            int j=col%10;
+            sum=sum+i+j;
+        }
+        if(sum>threshold)return true;
+        else return false;
+    }
+    
+    public int countCell(int threshold,int rows,int cols,int row,int col,boolean [][]visited){
+        if(row<0 || row>=rows || col<0 || col>=cols || visited[row][col] || judgeCore(threshold,row,col)){
+            return 0;
+        }
+        visited[row][col]=true;
+        return 1+countCell(threshold,rows,cols,row-1,col,visited)+
+            countCell(threshold,rows,cols,row+1,col,visited)+
+            countCell(threshold,rows,cols,row,col-1,visited)+
+            countCell(threshold,rows,cols,row,col+1,visited);//四个方向相加
+    }
+    
+    public int movingCount(int threshold, int rows, int cols)
+    {
+        if(threshold<0)return 0;
+        boolean [][]visited=new boolean [rows][cols];
+        
+        return countCell(threshold,rows,cols,0,0,visited);
+    }
+}
