@@ -1,0 +1,28 @@
+public class Solution {
+    
+    @solution
+    //1每次向左移一位，移到符号位时，结束循环，时间复杂度O(n)
+    public int NumberOf1(int n){
+        int count=0;
+        int flag=1;
+        while(flag!=0){
+            if( (n&flag) !=0){
+                count++;
+            }
+            flag=flag<<1;//不能用flag向右移，当flag为负时，每次移1，死循环。
+        }
+        return count;
+    }
+
+    @solution
+    //n&(n-1)每次将最右的1变为0.
+    public int NumberOf1(int n) {
+        int count=0;
+        while(n!=0){
+            n=n&(n-1);
+            count++;
+        }
+        return count;
+    }
+    
+}
