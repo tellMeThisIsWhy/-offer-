@@ -1,0 +1,29 @@
+public void print1ToMaxOfNDigits(int n) {
+        //对输入的异常判断
+        if (n <= 0)
+            return;
+        char[] number = new char[n];
+        print1ToMaxOfNDigits(number, 0);
+    }
+
+    private void print1ToMaxOfNDigits(char[] number, int pos) {
+        //若当前number的位数达到number.length，则输出。否则继续添加一位。
+        if (pos == number.length) {
+            printNumber(number);
+            return;
+        }
+        for (int i = 0; i < 10; i++) {
+            //i+'0'，强制转换
+            number[pos] = (char) (i + '0');
+            print1ToMaxOfNDigits(number, pos + 1);
+        }
+    }
+
+    private void printNumber(char[] number) {
+        int index = 0;
+        while (index < number.length && number[index] == '0')
+            index++;
+        while (index < number.length)
+            System.out.print(number[index++]);
+        System.out.println();
+    }
