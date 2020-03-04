@@ -1,0 +1,27 @@
+public void deleteEnd(ListNode node,ListNode head){
+        if(node==head){
+            //2.链表只有一个节点
+            head=null;
+            return ;
+        }
+        ListNode temp=head;
+        while(temp.next!=node){
+            temp=temp.next;
+        }
+        temp.next=null;
+    }
+
+    public void deleteNodeCore(ListNode node,ListNode head){
+        if(node.next==null){
+            deleteEnd(node, head);
+            return ;
+        }
+        node.value=node.next.value;
+        node.next=node.next.next;
+    }
+
+    public void deleteNode(ListNode node,ListNode head){
+        //1.头结点为空，待删除节点为空
+        if(head==null || node==null)return;
+        deleteNodeCore(node,head);
+    }
