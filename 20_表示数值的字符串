@@ -1,0 +1,29 @@
+public class Solution {
+    public boolean isNumeric(char[] str) {
+        if(str==null || str.length==0)return false;
+        //       标记E、      小数点、       符号是否出现过
+        boolean flagE=false,flagDot=false,flagSymbol=false;
+        int i=0;
+        
+        for(;i<str.length;i++){
+            if(str[i]=='+'||str[i]=='-'){
+                // 第二次出现+-符号，则必须紧接在e之后
+                if(flagSymbol==true && str[i-1]!='e' && str[i-1]!='E')return false;
+                // 第一次出现+-符号，且不是在字符串开头，则也必须紧接在e之后
+                if(flagSymbol==false && i>0 && str[i-1]!='e' && str[i-1]!='E')return false;
+                flagSymbol=true;
+            }
+            else if(str[i]=='e'||str[i]=='E'){
+                // e后面一定要接数字 &&  不能同时存在两个e
+                if(i == str.length-1 || flagE==true)return false;
+                flagE=true;
+            }
+            else if(str[i]=='.'){
+                //小数点不能出现两次 && e后面不能接小数点 
+                if(flagDot==true || flagE==true)return false;
+                flagDot=true;
+            }else if(str[i]<'0' || str[i]>'9')return false;
+        }
+        return true;
+    }
+}
